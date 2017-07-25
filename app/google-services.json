@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1085785545916",
+    "firebase_url": "https://aspro-ff5de.firebaseio.com",
+    "project_id": "aspro-ff5de",
+    "storage_bucket": "aspro-ff5de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085785545916:android:42c8a87f3886f8f6",
+        "android_client_info": {
+          "package_name": "com.example.patrick.aspro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085785545916-dg5v792s75l40er92kjvqevc6704ekmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.patrick.aspro",
+            "certificate_hash": "841b171628647713ab0ec07089db6f5625cf2dc0"
+          }
+        },
+        {
+          "client_id": "1085785545916-nkaird677thivq9kmo4dg4uhjh60sgsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdJaLZ0l1COT948ajpIN36M5dd-cjGPis"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085785545916-nkaird677thivq9kmo4dg4uhjh60sgsn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

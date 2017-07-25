@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Aspro</string>
+    <string name="firstName">Nome</string>
+    <string name="lastName">Sobrenome</string>
+    <string name="profession">Profissão</string>
+    <string name="occupation">Ocupação</string>
+    <string name="professional">Profissional</string>
+    <string name="student_aspirant">Estudante/Aspirante</string>
+    <string name="username">Nome de Usuário</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="confirmPassword">Confirmar Senha</string>
+    <string name="birthday">Data de Nascimento</string>
+    <string name="phone">Telefone</string>
+    <string name="register">Cadastrar</string>
+    <string name="fieldEmptyMsg">Estes campos não foram preenchidos: </string>
+    <string name="confirmPasswordMsg">Confirmação de senha está incorreta</string>
+</resources>
