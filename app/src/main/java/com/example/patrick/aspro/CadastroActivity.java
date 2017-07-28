@@ -45,8 +45,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private RadioGroup rg_occupation;
     private String occupation;
     private Button register;
-    private User_pro user_pro;
-    private User_student user_student;
+    private Usuario user;
 
 
     private ArrayList<String> error_list;
@@ -142,10 +141,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         dialog.show();
     }
     public Boolean confirmPassword(){
-        if(password.getText().toString().equals(confirm_Password.getText().toString()) ){
-            return true;
-        }
-        else return false;
+        return password.getText().toString().equals(confirm_Password.getText().toString());
     }
     public void showConfirmPasswordDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
@@ -158,43 +154,28 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
     public void createUser(){
 
-        switch(rg_occupation.getCheckedRadioButtonId()){
-            case R.id.rb_signup_student:
-                occupation = getString(R.string.student_aspirant);
-                user_student = new User_student();
-                user_student.setFirstName(firstName.getText().toString());
-                user_student.setLastName(lastName.getText().toString());
-                user_student.setEmail(email.getText().toString());
-                user_student.setPassword(password.getText().toString());
-                user_student.setOccupation(occupation);
-                break;
+        occupation = getString(R.string.student_aspirant);
+        user = new Usuario();
+        user.setFirstName(firstName.getText().toString());
+        user.setLastName(lastName.getText().toString());
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
+        user.setOccupation(occupation);
 
-            case R.id.rb_signup_pro:
-                occupation = getString(R.string.professional);
-                user_pro = new User_pro();
-                user_pro.setFirstName(firstName.getText().toString());
-                user_pro.setLastName(lastName.getText().toString());
-                user_pro.setEmail(email.getText().toString());
-                user_pro.setPassword(password.getText().toString());
-                user_pro.setOccupation(occupation);
-                break;
-        }
     }
     public void registerUser(){
         final FirebaseAuth firebaseAuth = FirebaseAuthConfig.getFirebaseAuth();
-        if(rg_occupation.getCheckedRadioButtonId() == R.id.rb_signup_pro){
-
             firebaseAuth.createUserWithEmailAndPassword(
-                    user_pro.getEmail(),
-                    user_pro.getPassword()
+                    user.getEmail(),
+                    user.getPassword()
             ).addOnCompleteListener(CadastroActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         final FirebaseAuth firebasAuth = FirebaseAuthConfig.getFirebaseAuth();
                         FirebaseUser firebaseUser = task.getResult().getUser();
-                        user_pro.setUid(firebaseUser.getUid());
-                        user_pro.saveUserInDatabase();
+                        user.setUid(firebaseUser.getUid());
+                        user.saveUserInDatabase();
 
                         sendEmailConfirmation();
                     }
@@ -219,48 +200,9 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
             });
-
-        }
-        else{
-            firebaseAuth.createUserWithEmailAndPassword(
-                    user_pro.getEmail(),
-                    user_pro.getPassword()
-            ).addOnCompleteListener(CadastroActivity.this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        final FirebaseAuth firebasAuth = FirebaseAuthConfig.getFirebaseAuth();
-                        FirebaseUser firebaseUser = task.getResult().getUser();
-                        user_pro.setUid(firebaseUser.getUid());
-                        user_pro.saveUserInDatabase();
-
-                        sendEmailConfirmation();
-                    }
-                    else{
-                        try{
-                            throw task.getException();
-                        }
-                        catch (FirebaseAuthUserCollisionException e ){
-                            Toast.makeText(CadastroActivity.this, "O usuário já existe", Toast.LENGTH_SHORT).show();
-                        }
-                        catch(FirebaseAuthWeakPasswordException e){
-                            Toast.makeText(CadastroActivity.this, "A senha deve possuir pelo menos 6 caracteres", Toast.LENGTH_SHORT).show();
-                        }
-                        catch(FirebaseAuthInvalidCredentialsException e){
-                            Toast.makeText(CadastroActivity.this, "Endereço de email inválido", Toast.LENGTH_SHORT).show();
-                        }
-                        catch (Exception e) {
-                            String error = "erro ao cadastrar: "+e.getMessage();
-                            Toast.makeText(CadastroActivity.this, error, Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            });
-        }
-
 
     }
+
 
     private void sendEmailConfirmation(){
         final FirebaseAuth firebaseAuth = FirebaseAuthConfig.getFirebaseAuth();

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:title="Principal" />
+        <item
+            android:id="@+id/nav_searchPro"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Buscar Profissionais" />
+
+    </group>
+    <group android:title="Minha conta">
+        <item
+            android:id="@+id/nav_editProfile"
+
+            android:title="Editar perfil" />
+        <item
+            android:title="Tornar-se premium"
+            />
+    </group>
+
+    <item android:title="Navegação">
+        <menu>
+            <item
+                android:id="@+id/nav_history"
+                android:title="histórico" />
+            <item
+                android:id="@+id/nav_favorites"
+                android:title="Favoritos" />
+            <item
+                android:id="@+id/nav_chat"
+                android:title="Conversas" />
+            <item
+                android:id="@+id/nav_logoff"
+
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>
