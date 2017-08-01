@@ -1,8 +1,11 @@
 package com.example.patrick.aspro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.patrick.aspro.fragments.SearchFragment;
 import com.example.patrick.aspro.models.Usuario;
 import com.example.patrick.aspro.util.FirebaseAuthConfig;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private Usuario user_data;
     private TextView drawer_user_name;
     private TextView drawer_email;
+    private String accType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         drawer_user_name = (TextView) header.findViewById(R.id.tv_main_name);
         drawer_email = (TextView) header.findViewById(R.id.tv_main_email);
 
-
         firebaseAuth = FirebaseAuthConfig.getFirebaseAuth();
         firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -69,9 +74,14 @@ public class MainActivity extends AppCompatActivity
         databaseReference.child("Usuários").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_data = dataSnapshot.getValue(Usuario.class);
-                drawer_user_name.setText(user_data.getFirstName()+" "+user_data.getLastName());
-                drawer_email.setText(user_data.getEmail());
+                if(dataSnapshot != null){
+                    user_data = dataSnapshot.getValue(Usuario.class);
+                    drawer_user_name.setText(user_data.getFirstName()+" "+user_data.getLastName());
+                    drawer_email.setText(user_data.getEmail());
+                    accType = user_data.getAccType();
+                }
+
+
             }
 
             @Override
@@ -79,6 +89,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
         //drawer_user_name.setText(firebaseUser.);
 
     }
@@ -121,24 +132,31 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_main) {
-            // Handle the camera action
-        } else if (id == R.id.nav_searchPro) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_logoff) {
-            firebaseAuth.signOut();
-            finish();
-
-        } else if (id == R.id.nav_favorites) {
-
-        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        displaySelectedScreen(id);
         return true;
+    }
+    private void displaySelectedScreen(int id){
+        Fragment fragment = null;
+
+        switch (id){
+            case R.id.nav_searchPro:
+                fragment = new SearchFragment();
+                break;
+            case R.id.nav_editProfilePro:
+                if(accType.equals("Premium")){
+                    startActivity(new Intent(this,ProfileProActivity.class));
+                }
+                else{
+                    Toast.makeText(this, "O perfil profissional é reservado para usuários Premium", Toast.LENGTH_SHORT).show();
+                }
+
+        }
+        if (fragment != null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainFragmentContainer,fragment);
+            fragmentTransaction.commit();
+        }
     }
 }

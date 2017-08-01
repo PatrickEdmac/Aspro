@@ -14,8 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patrick.aspro.models.User_pro;
-import com.example.patrick.aspro.models.User_student;
 import com.example.patrick.aspro.models.Usuario;
 import com.example.patrick.aspro.util.FirebaseAuthConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,13 +24,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.example.patrick.aspro.R.drawable.user;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,8 +37,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private EditText email;
     private EditText password;
     private EditText confirm_Password;
-    private RadioGroup rg_occupation;
-    private String occupation;
+    private RadioGroup rg_accType;
+    private String accType;
     private Button register;
     private Usuario user;
 
@@ -65,7 +60,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         password = (EditText) findViewById(R.id.et_signup_password);
         confirm_Password = (EditText) findViewById(R.id.et_signup_confirmPassword);
         register = (Button) findViewById(R.id.bt_signup_register);
-        rg_occupation = (RadioGroup) findViewById(R.id.rg_signup_occupation);
+        rg_accType = (RadioGroup) findViewById(R.id.rg_signup_accType);
 
 
         toolbar.setTitle("Cadastro");
@@ -85,13 +80,13 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                     createUser();
                     registerUser();
 
-                    //Toast.makeText(getApplicationContext(),"todos campos preenchidos",Toast.LENGTH_LONG).show();
+
                 }
                 else{
                     showConfirmPasswordDialog();
                 }
 
-                //databaseRegister();
+
             }
             else {
                 showEmptyFieldDialog(error_list);
@@ -140,6 +135,19 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    private void showUserSuccessfulRegisterDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
+        builder.setCancelable(false);
+        builder.setMessage("Usuário registrado com sucesso");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     public Boolean confirmPassword(){
         return password.getText().toString().equals(confirm_Password.getText().toString());
     }
@@ -154,13 +162,20 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
     public void createUser(){
 
-        occupation = getString(R.string.student_aspirant);
         user = new Usuario();
         user.setFirstName(firstName.getText().toString());
         user.setLastName(lastName.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
-        user.setOccupation(occupation);
+        if (rg_accType.getCheckedRadioButtonId() == R.id.rb_signup_premium){
+            // 1 para conta premium e 0 para conta simples
+            accType = "Premium";
+        }
+        else{
+            accType ="Simples";
+        }
+
+        user.setAccType(accType);
 
     }
     public void registerUser(){
@@ -177,7 +192,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                         user.setUid(firebaseUser.getUid());
                         user.saveUserInDatabase();
 
-                        sendEmailConfirmation();
+                        showUserSuccessfulRegisterDialog();
+                        //sendEmailConfirmation();
                     }
                     else{
                         try{

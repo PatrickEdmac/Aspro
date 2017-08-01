@@ -1,7 +1,12 @@
 package com.example.patrick.aspro.models;
 
+import android.widget.Toast;
+
 import com.example.patrick.aspro.util.FirebaseAuthConfig;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Patrick on 24/07/2017.
@@ -9,78 +14,68 @@ import com.google.firebase.database.DatabaseReference;
 
 public class User_pro {
 
-        private String Uid;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String password;
-        private String occupation;
-        private Float wage;
+    private String Uid;
+    private String name;
+    private String desc;
+    private String profession;
+    private String wage;
+    private String professionPos;
 
 
-        public String getFirstName() {
-            return firstName;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getLastName() {
-            return lastName;
-        }
+    public String getDesc() {
+        return desc;
+    }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        public String getEmail() {
-            return email;
-        }
+    public String getProfession() {
+        return profession;
+    }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public String getUid() {
+        return Uid;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public void setUid(String uid) {
+        Uid = uid;
+    }
 
-        public String getOccupation() {
-            return occupation;
-        }
-
-        public void setOccupation(String occupation) {
-            this.occupation = occupation;
-        }
-
-        public String getUid() {
-            return Uid;
-        }
-
-        public void setUid(String uid) {
-            Uid = uid;
-        }
-
-    public Float getWage() {
+    public String getWage() {
         return wage;
     }
 
-    public void setWage(Float wage) {
+    public void setWage(String wage) {
         this.wage = wage;
     }
 
+    public String getProfessionPos() {
+        return professionPos;
+    }
+
+    public void setProfessionPos(String professionPos) {
+        this.professionPos = professionPos;
+    }
+
     public void saveUserInDatabase(){
-            DatabaseReference databaseReference = FirebaseAuthConfig.getFirebase();
-            databaseReference.child("Usuários").child(getUid()).setValue(this);
+                DatabaseReference databaseReference = FirebaseAuthConfig.getFirebase();
+                databaseReference.child("Profissionais").child(getUid()).setValue(this);
+    }
+    public User_pro(){
 
-        }
-        public User_pro(){
-
-        }
+    }
 
 }

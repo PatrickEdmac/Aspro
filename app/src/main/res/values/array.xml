@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="profissoes">
+        <item></item>
+        <item>Advogado</item>
+        <item>Médico</item>
+        <item>Programador</item>
+    </string-array>
+
+
+</resources>

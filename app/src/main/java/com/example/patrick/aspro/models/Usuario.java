@@ -15,7 +15,7 @@ public class Usuario {
     private String lastName;
     private String email;
     private String password;
-    private String occupation;
+    private String accType;
 
 
     public String getFirstName() {
@@ -50,12 +50,12 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getAccType() {
+        return accType;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setAccType(String accType) {
+        this.accType = accType;
     }
 
     public String getUid() {

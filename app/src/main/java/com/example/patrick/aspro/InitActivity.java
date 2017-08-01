@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.patrick.aspro.util.FirebaseAuthConfig;
-import com.example.patrick.aspro.util.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,9 +25,11 @@ public class InitActivity extends AppCompatActivity implements View.OnClickListe
         firebaseUser = firebaseAuth.getCurrentUser();
 
         if(firebaseUser != null){
-            if(firebaseUser.isEmailVerified()){
+            //if(firebaseUser.isEmailVerified()){
+
                 startActivity(new Intent(InitActivity.this, MainActivity.class));
-            }
+            //}
+
 
         }
 

@@ -11,15 +11,19 @@
             android:title="Buscar Profissionais" />
 
     </group>
-    <group android:title="Minha conta">
+    <item android:title="Minha conta">
+        <menu>
         <item
             android:id="@+id/nav_editProfile"
-
-            android:title="Editar perfil" />
+            android:title="Perfil de Usuário" />
+            <item
+                android:id="@+id/nav_editProfilePro"
+                android:title="Perfil profissional" />
         <item
             android:title="Tornar-se premium"
             />
-    </group>
+        </menu>
+    </item>
 
     <item android:title="Navegação">
         <menu>
