@@ -32,5 +32,11 @@ public final class FirebaseAuthConfig {
         }
         return  firebaseAuth;
     }
+    public static String getFirebaseUserId(){
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        String uid = firebaseUser.getUid();
+        return uid;
+    }
 
 }

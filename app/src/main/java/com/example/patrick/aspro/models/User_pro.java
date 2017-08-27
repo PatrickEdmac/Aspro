@@ -20,6 +20,7 @@ public class User_pro {
     private String profession;
     private String wage;
     private String professionPos;
+    private String email;
 
 
     public String getName() {
@@ -74,6 +75,15 @@ public class User_pro {
                 DatabaseReference databaseReference = FirebaseAuthConfig.getFirebase();
                 databaseReference.child("Profissionais").child(getUid()).setValue(this);
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public User_pro(){
 
     }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.patrick.aspro.fragments.ChatFragment;
 import com.example.patrick.aspro.fragments.SearchFragment;
 import com.example.patrick.aspro.models.Usuario;
 import com.example.patrick.aspro.util.FirebaseAuthConfig;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //drawer_user_name.setText(firebaseUser.);
+
 
     }
 
@@ -146,11 +147,20 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_editProfilePro:
                 if(accType.equals("Premium")){
-                    startActivity(new Intent(this,ProfileProActivity.class));
+                    startActivity(new Intent(this,ProfileProRegActivity.class));
                 }
                 else{
                     Toast.makeText(this, "O perfil profissional é reservado para usuários Premium", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.nav_chat:
+                fragment = new ChatFragment();
+                break;
+            case R.id.nav_logoff:
+                firebaseAuth.signOut();
+                finish();
+                break;
+
 
         }
         if (fragment != null){
